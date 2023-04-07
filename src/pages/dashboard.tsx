@@ -11,7 +11,6 @@ import {
   TextField,
 } from "@mui/material";
 import AddVacancy from "../components/AddVacancy";
-import { DashboardPanel } from "../components/DashboardPanel";
 import { ChangeEvent, useState } from "react";
 
 export const AddCV = () => {

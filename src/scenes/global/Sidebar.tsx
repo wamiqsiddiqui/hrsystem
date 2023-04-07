@@ -85,9 +85,17 @@ export const CustomSidebar = () => {
                   alignItems="center"
                   ml={"15px"}
                 >
+                  <img
+                    src={`../../assets/hr.png`}
+                    style={{ cursor: "pointer" }}
+                    width="50px"
+                    height="50px"
+                    alt="profile-user"
+                  />
                   <Typography variant={"h3"} color={colors.grey[100]}>
                     HR Admin
                   </Typography>
+
                   <IconButton>
                     <MenuOutlinedIcon />
                   </IconButton>
@@ -135,6 +143,13 @@ export const CustomSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Data
+            </Typography>
             <Item
               title={"Vacancies"}
               to={"/team"}
@@ -163,6 +178,13 @@ export const CustomSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Pages
+            </Typography>
             <Item
               title={"Calender"}
               to={"/calendar"}
@@ -177,6 +199,14 @@ export const CustomSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Charts
+            </Typography>
             <Item
               title={"Bar Chart"}
               to={"/bar"}
