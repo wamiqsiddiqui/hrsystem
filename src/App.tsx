@@ -3,7 +3,7 @@ import { ColorModeContext, useMode } from "./theme";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { CustomSidebar } from "./pages/global/Sidebar";
 import Dashboard from "./pages/dashboard/dashboardIndex";
-// import Team from "./scenes/team";
+// import Vacancies from "./pages/Vacancies";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
 // import Bar from "./scenes/bar";
@@ -15,6 +15,7 @@ import Dashboard from "./pages/dashboard/dashboardIndex";
 // import Calendar from "./scenes/calendar";
 import { Route, Routes } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { Vacancies } from "./pages/vacancies/vacancyIndex";
 //Theme provider provides ability to provide themes to our material UI
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
             <Topbar />
             <Routes>
               <Route path="/" element={<Dashboard />}></Route>
-              {/* <Route path="/team" element={<Team />}></Route> */}
+              <Route path="/team" element={<Vacancies />}></Route>
               {/* <Route path="/contacts" element={<Contacts />}></Route> */}
               {/* <Route path="/invoices" element={<Invoices />}></Route> */}
               {/* <Route path="/form" element={<Form />}></Route> */}
