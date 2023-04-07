@@ -27,7 +27,6 @@ const Dashboard = () => {
         <UploadCV />
       </Box>
     </Box>
-    // </div>
   );
 };
 export default Dashboard;
