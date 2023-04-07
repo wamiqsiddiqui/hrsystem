@@ -11,9 +11,6 @@ import {
   useTheme,
 } from "@mui/material";
 import "/home/wamiq/Projects/my-app/src/dashboard.css";
-import { AddCV } from "../../pages/dashboard";
-import { ChangeEvent, useState } from "react";
-import { tokens } from "../../theme";
 import { Header } from "../../components/Header";
 import { UploadCV } from "../../components/UploadCV";
 
