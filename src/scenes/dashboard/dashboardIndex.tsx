@@ -19,7 +19,6 @@ import { UploadCV } from "../../components/UploadCV";
 
 const Dashboard = () => {
   return (
-    // <div className="radioGroup">
     <Box m={"20px"}>
       <Box
         alignContent={"start"}

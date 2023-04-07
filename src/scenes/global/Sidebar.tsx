@@ -1,11 +1,10 @@
+import "/home/wamiq/Projects/my-app/src/App.css";
+import "react-pro-sidebar/dist/css/styles.css";
 import { ReactNode, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import "react-pro-sidebar/dist/css/styles.css";
-// import "react-pro-sidebar/dist/utils/utilityClasses";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
-import "/home/wamiq/Projects/my-app/src/App.css";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -78,6 +77,7 @@ export const CustomSidebar = () => {
               }
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             >
+              <div></div>
               {!isCollapsed && (
                 <Box
                   display="flex"

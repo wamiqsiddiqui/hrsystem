@@ -15,7 +15,7 @@ import Dashboard from "./scenes/dashboard/dashboardIndex";
 // import Calendar from "./scenes/calendar";
 import { Route, Routes } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-//Theme crovider provides ability to provide themes to our material UI
+//Theme provider provides ability to provide themes to our material UI
 
 function App() {
   const [theme, colorMode] = useMode();

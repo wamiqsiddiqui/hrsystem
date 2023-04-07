@@ -59,7 +59,7 @@ export const UploadCV = () => {
             <TextField placeholder="Enter CV URL "></TextField>
           )}
         </RadioGroup>
-        <Button>Submit</Button>
+        <Button sx={{ backgroundColor: colors.grey[100] }}>Submit</Button>
       </FormControl>
     </div>
   );
