@@ -10,7 +10,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import "/home/wamiq/Projects/my-app/src/dashboard.css";
+import "../../dashboard.css";
 import { Header } from "../../components/Header";
 import { UploadCV } from "../../components/UploadCV";
 

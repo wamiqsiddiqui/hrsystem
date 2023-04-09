@@ -1,4 +1,4 @@
-import "/home/wamiq/Projects/my-app/src/App.css";
+import '../../App.css';
 import "react-pro-sidebar/dist/css/styles.css";
 import { ReactNode, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";

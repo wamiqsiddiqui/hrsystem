@@ -1,6 +1,6 @@
 
 import { ChangeEvent, useEffect, useState } from 'react'
-import hrapp from '/home/wamiq/projects/hiringapp/src/hr.png'
+import hrapp from 'public/assets/hr.png'
 
 type formValueTypes = {
     email: string,

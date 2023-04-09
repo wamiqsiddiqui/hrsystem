@@ -7,7 +7,6 @@ import Dashboard from "./pages/dashboard/dashboardIndex";
 // import Invoices from "./scenes/invoices";
 // import Contacts from "./scenes/contacts";
 // import Bar from "./scenes/bar";
-// import Form from "./scenes/form";
 // import Line from "./scenes/line";
 // import Pie from "./scenes/pie";
 // import FAQ from "./scenes/faq";
@@ -16,6 +15,7 @@ import Dashboard from "./pages/dashboard/dashboardIndex";
 import { Route, Routes } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Vacancies } from "./pages/vacancies/vacancyIndex";
+import Form from "./pages/form/formIndex";
 //Theme provider provides ability to provide themes to our material UI
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
               <Route path="/team" element={<Vacancies />}></Route>
               {/* <Route path="/contacts" element={<Contacts />}></Route> */}
               {/* <Route path="/invoices" element={<Invoices />}></Route> */}
-              {/* <Route path="/form" element={<Form />}></Route> */}
+              <Route path="/form" element={<Form />}></Route>
               {/* <Route path="/bar" element={<Bar />}></Route> */}
               {/* <Route path="/pie" element={<Pie />}></Route> */}
               {/* <Route path="/line" element={<Line />}></Route> */}
