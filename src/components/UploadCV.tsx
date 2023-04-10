@@ -11,7 +11,18 @@ import {
 import { tokens } from "../theme";
 import { ChangeEvent, useState } from "react";
 
-export const UploadCV = () => {
+export enum UploadTypes { File = "file", URL = "url"}
+export type UploadCVArgs ={
+  data: string
+  type : UploadTypes
+}
+
+export type UploadCVProps = {
+  onUpload? : (arg: UploadCVArgs) => void
+}
+
+export const UploadCV = (props: UploadCVProps) => {
+  const [uploaded, setUploaded] = useState(false)
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selectedCVValue, setSelectedCVValue] = useState("Upload");
@@ -19,8 +30,11 @@ export const UploadCV = () => {
     console.log(event.target.value);
     setSelectedCVValue(event.target.value);
   };
-  return (
-    <div style={{ backgroundColor: colors.primary[400] }}>
+
+  const { onUpload } = props
+
+    if(!uploaded){
+    return (<div style={{ backgroundColor: colors.primary[400] }}>
       <FormControl>
         <Typography
           textAlign={"center"}
@@ -59,8 +73,19 @@ export const UploadCV = () => {
             <TextField placeholder="Enter CV URL "></TextField>
           )}
         </RadioGroup>
-        <Button sx={{ backgroundColor: colors.grey[100] }}>Submit</Button>
+        <Button sx={{ backgroundColor: colors.grey[100] }} onClick={()=>{
+            onUpload?.({
+              type: UploadTypes.URL,
+              data: ""
+            })
+            setUploaded(true)
+        }}>Submit</Button>
       </FormControl>
     </div>
-  );
+  )
+      }
+
+  else{
+    return <>Thank you for uploading</>
+  }
 };

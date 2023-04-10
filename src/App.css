@@ -1,9 +1,23 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 12vh 12vh 12vh 12vh;
+}
+
+.googleButton {
+  margin-top: "5%";
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .App-logo {
   height: 20vmin;
+  width: 20vmin;
   pointer-events: none;
 }
 
@@ -14,7 +28,8 @@
 }
 
 .TextStyle {
-  color: #282c34;
+  padding-top: 12px;
+  color: #141b2d;
 }
 .TextBoxStyle {
   min-height: 30px;
@@ -45,11 +60,12 @@
 
 .LoginContainer {
   background-color: white;
+  display: block;
+  width: fit-content;
+  height: fit-content;
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 30px;
-  min-height: 30vh;
-  min-width: 40vh;
   border-radius: 2vh;
 }
 
