@@ -1,4 +1,4 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, Tooltip, useTheme } from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import { InputBase } from "@mui/material";
@@ -8,6 +8,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -24,22 +25,50 @@ const Topbar = () => {
       </Box>
       {/* Icons */}
       <Box display={"flex"}>
-        <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
+        <Tooltip
+          children={
+            <IconButton onClick={colorMode.toggleColorMode}>
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlinedIcon />
+              ) : (
+                <LightModeOutlinedIcon />
+              )}
+            </IconButton>
+          }
+          title={"Switch Theme"}
+        />
+        <Tooltip
+          children={
+            <IconButton>
+              <NotificationsOutlinedIcon />
+            </IconButton>
+          }
+          title={"Notifications"}
+        />
+        <Tooltip
+          children={
+            <IconButton>
+              <SettingsOutlinedIcon />
+            </IconButton>
+          }
+          title={"Settings"}
+        />
+        <Tooltip
+          children={
+            <IconButton>
+              <PersonOutlinedIcon />
+            </IconButton>
+          }
+          title={"Profile"}
+        />
+        <Tooltip
+          children={
+            <IconButton>
+              <LogoutIcon />
+            </IconButton>
+          }
+          title={"Logout"}
+        />
       </Box>
     </Box>
   );
