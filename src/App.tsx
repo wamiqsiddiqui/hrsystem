@@ -11,10 +11,9 @@ import { CustomSidebar } from "./pages/global/Sidebar";
 // import Pie from "./scenes/pie";
 // import Geography from "./scenes/geography";
 import { Route, Routes } from "react-router-dom";
-import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Vacancies } from "./pages/vacancies/vacancyIndex";
 import Form from "./pages/form/formIndex";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
 import { Calendar } from "./pages/calender/indexCalender";
@@ -45,13 +44,19 @@ export type UserType = {
 export const AuthenticatedUserContext = createContext({} as UserType);
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({} as UserObject);
+  const [isLoggedIn, setLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true" ? true : false
+  );
+  const [user, setUser] = useState(
+    localStorage.getItem("userObject") === null
+      ? ({} as UserObject)
+      : (JSON.parse(localStorage.getItem("userObject") ?? "") as UserObject)
+  );
   const [theme, colorMode] = useMode();
   const logout = () => {
-    console.log("Logging out");
     setUser({} as UserObject);
     setLoggedIn(false);
+    localStorage.setItem("isLoggedIn", "false");
   };
   return (
     <ColorModeContext.Provider value={colorMode}>

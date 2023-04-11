@@ -20,6 +20,8 @@ export const GoogleLogin = (props: GoogleLoginProps) => {
 
     if (userObject.hd === "mythod.com") {
       props.setLogin(true, userObject);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userObject", JSON.stringify(userObject));
     } else {
       alert("Please login from your Mythod Gmail Address");
     }
