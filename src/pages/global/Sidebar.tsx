@@ -114,7 +114,7 @@ export const CustomSidebar = () => {
               >
                 <img
                   // src={`../../assets/profile.png`}
-                  src={user.picture}
+                  src={user.userObject.picture}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                   width="100px"
                   height="100px"
@@ -128,7 +128,7 @@ export const CustomSidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {user.name}
+                  {user.userObject.name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Sr.Software Engineer

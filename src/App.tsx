@@ -21,7 +21,7 @@ import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
 //Theme provider provides ability to provide themes to our material UI
 
-export type UserTypes = {
+export type UserObject = {
   aud: string;
   azp: string;
   email: string;
@@ -38,11 +38,21 @@ export type UserTypes = {
   picture: string;
   sub: string;
 };
-export const AuthenticatedUserContext = createContext({} as UserTypes);
+export type UserType = {
+  userObject: UserObject;
+  updateUser?: () => void;
+};
+export const AuthenticatedUserContext = createContext({} as UserType);
+
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({} as UserTypes);
+  const [user, setUser] = useState({} as UserObject);
   const [theme, colorMode] = useMode();
+  const logout = () => {
+    console.log("Logging out");
+    setUser({} as UserObject);
+    setLoggedIn(false);
+  };
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -50,14 +60,16 @@ function App() {
         {!isLoggedIn ? (
           <div>
             <GoogleLogin
-              setLogin={function (isLoggedIn: boolean, user: UserTypes): void {
+              setLogin={function (isLoggedIn: boolean, user: UserObject): void {
                 setLoggedIn(isLoggedIn);
                 setUser(user);
               }}
             />
           </div>
         ) : (
-          <AuthenticatedUserContext.Provider value={user}>
+          <AuthenticatedUserContext.Provider
+            value={{ userObject: user, updateUser: logout }}
+          >
             <div className="app">
               <CustomSidebar />
               <main className="content">
