@@ -11,7 +11,6 @@ import { CustomSidebar } from "./pages/global/Sidebar";
 // import Pie from "./scenes/pie";
 // import FAQ from "./scenes/faq";
 // import Geography from "./scenes/geography";
-// import Calendar from "./scenes/calendar";
 import { Route, Routes } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Vacancies } from "./pages/vacancies/vacancyIndex";
@@ -19,6 +18,7 @@ import Form from "./pages/form/formIndex";
 import { createContext, useEffect, useState } from "react";
 import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
+import { Calendar } from "./pages/calender/indexCalender";
 //Theme provider provides ability to provide themes to our material UI
 
 export type UserObject = {
@@ -85,7 +85,7 @@ function App() {
                   {/* <Route path="/line" element={<Line />}></Route> */}
                   {/* <Route path="/faq" element={<FAQ />}></Route> */}
                   {/* <Route path="/geography" element={<Geography />}></Route> */}
-                  {/* <Route path="/calendar" element={<Calendar />}></Route> */}
+                  <Route path="/calendar" element={<Calendar />}></Route>
                 </Routes>
               </main>
             </div>
