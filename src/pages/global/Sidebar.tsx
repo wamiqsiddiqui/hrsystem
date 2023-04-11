@@ -1,6 +1,6 @@
-import '../../App.css';
+import "../../App.css";
 import "react-pro-sidebar/dist/css/styles.css";
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ import PieChartOutlinedIcon from "@mui/icons-material/PieChartOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import { AuthenticatedUserContext } from "../../App";
 
 type ItemTypes = {
   title: string;
@@ -45,6 +46,7 @@ const Item = ({ title, to, icon, selected, setSelected }: ItemTypes) => {
 };
 export const CustomSidebar = () => {
   const theme = useTheme();
+  const user = useContext(AuthenticatedUserContext);
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
@@ -111,7 +113,8 @@ export const CustomSidebar = () => {
                 alignItems="center"
               >
                 <img
-                  src={`../../assets/profile.png`}
+                  // src={`../../assets/profile.png`}
+                  src={user.userObject.picture}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                   width="100px"
                   height="100px"
@@ -125,7 +128,7 @@ export const CustomSidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Wamiq
+                  {user.userObject.name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Sr.Software Engineer
