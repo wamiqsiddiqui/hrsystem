@@ -182,6 +182,13 @@ export const CustomSidebar = () => {
               setSelected={setSelected}
             />
             <Item
+              title={"Add Hiring Session"}
+              to={"/addHiringSession"}
+              icon={<GroupIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title={"Manage Users"}
               to={"/users"}
               icon={<GroupIcon />}

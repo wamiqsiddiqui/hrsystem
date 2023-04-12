@@ -12,32 +12,17 @@ import { CustomSidebar } from "./pages/global/Sidebar";
 // import Geography from "./scenes/geography";
 import { Route, Routes } from "react-router-dom";
 import { Vacancies } from "./pages/vacancies/vacancyIndex";
-import Form from "./pages/form/formIndex";
+import AddVacancy from "./pages/addVacancy/addVacancyIndex";
 import { createContext, useState } from "react";
 import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
 import { Calendar } from "./pages/calender/indexCalender";
 import { FAQ } from "./pages/faq/faqIndex";
 import { Users } from "./pages/users/userIndex";
+import { UserObject } from "./models/UserObject";
+import { AddHiringSession } from "./pages/addHiringSession/hiringSessionIndex";
 //Theme provider provides ability to provide themes to our material UI
 
-export type UserObject = {
-  aud: string;
-  azp: string;
-  email: string;
-  email_verified: boolean;
-  exp: number;
-  family_name: string;
-  given_name: string;
-  hd: string;
-  iat: number;
-  iss: string;
-  jti: string;
-  name: string;
-  nbf: string;
-  picture: string;
-  sub: string;
-};
 export type UserType = {
   userObject: UserObject;
   updateUser?: () => void;
@@ -85,8 +70,12 @@ function App() {
                   <Route path="/team" element={<Vacancies />}></Route>
                   {/* <Route path="/contacts" element={<Contacts />}></Route> */}
                   {/* <Route path="/invoices" element={<Invoices />}></Route> */}
-                  <Route path="/form" element={<Form />}></Route>
+                  <Route path="/form" element={<AddVacancy />}></Route>
                   <Route path="/users" element={<Users />}></Route>
+                  <Route
+                    path="/addHiringSession"
+                    element={<AddHiringSession />}
+                  ></Route>
                   {/* <Route path="/bar" element={<Bar />}></Route> */}
                   {/* <Route path="/pie" element={<Pie />}></Route> */}
                   {/* <Route path="/line" element={<Line />}></Route> */}
