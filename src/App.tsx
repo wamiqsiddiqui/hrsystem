@@ -18,6 +18,7 @@ import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
 import { Calendar } from "./pages/calender/indexCalender";
 import { FAQ } from "./pages/faq/faqIndex";
+import { Users } from "./pages/users/userIndex";
 //Theme provider provides ability to provide themes to our material UI
 
 export type UserObject = {
@@ -85,6 +86,7 @@ function App() {
                   {/* <Route path="/contacts" element={<Contacts />}></Route> */}
                   {/* <Route path="/invoices" element={<Invoices />}></Route> */}
                   <Route path="/form" element={<Form />}></Route>
+                  <Route path="/users" element={<Users />}></Route>
                   {/* <Route path="/bar" element={<Bar />}></Route> */}
                   {/* <Route path="/pie" element={<Pie />}></Route> */}
                   {/* <Route path="/line" element={<Line />}></Route> */}

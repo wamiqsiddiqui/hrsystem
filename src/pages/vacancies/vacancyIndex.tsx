@@ -57,11 +57,12 @@ export const Vacancies = () => {
             display={"flex"}
             justifyContent={"center"}
             borderRadius={"4px"}
-            color={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : colors.greenAccent[700]
-            }
+            sx={{
+              backgroundColor:
+                access === "admin"
+                  ? colors.greenAccent[600]
+                  : colors.greenAccent[700],
+            }}
           >
             {access === "admin" && <AdminPanelSettingsOutlined />}
             {access === "manager" && <SecurityOutlined />}
