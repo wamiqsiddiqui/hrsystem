@@ -17,9 +17,15 @@ export const GoogleLogin = (props: GoogleLoginProps) => {
   ) => {
     console.log("Encoded JWT ID Token: " + response.credential);
     var userObject = jwt_decode(response.credential) as any;
-
+    console.log(JSON.stringify(userObject));
     if (userObject.hd === "mythod.com") {
       props.setLogin(true, userObject);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userObject", JSON.stringify(userObject));
+      localStorage.setItem(
+        `registered_${userObject.sub}`,
+        JSON.stringify(userObject)
+      );
     } else {
       alert("Please login from your Mythod Gmail Address");
     }

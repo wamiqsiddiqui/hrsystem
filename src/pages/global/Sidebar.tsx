@@ -17,6 +17,7 @@ import PieChartOutlinedIcon from "@mui/icons-material/PieChartOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import GroupIcon from "@mui/icons-material/Group";
 import { AuthenticatedUserContext } from "../../App";
 
 type ItemTypes = {
@@ -32,7 +33,6 @@ const Item = ({ title, to, icon, selected, setSelected }: ItemTypes) => {
   return (
     <div
       onClick={() => {
-        console.log(`Clicked ${title}`);
         setSelected(title);
       }}
       style={{ color: colors.grey[100] }}
@@ -178,6 +178,20 @@ export const CustomSidebar = () => {
               title={"Add Candidate Profile"}
               to={"/form"}
               icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title={"Add Hiring Session"}
+              to={"/addHiringSession"}
+              icon={<GroupIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title={"Manage Users"}
+              to={"/users"}
+              icon={<GroupIcon />}
               selected={selected}
               setSelected={setSelected}
             />

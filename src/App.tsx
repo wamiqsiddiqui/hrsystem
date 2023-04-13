@@ -9,35 +9,20 @@ import { CustomSidebar } from "./pages/global/Sidebar";
 // import Bar from "./scenes/bar";
 // import Line from "./scenes/line";
 // import Pie from "./scenes/pie";
-// import FAQ from "./scenes/faq";
 // import Geography from "./scenes/geography";
-// import Calendar from "./scenes/calendar";
 import { Route, Routes } from "react-router-dom";
-import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Vacancies } from "./pages/vacancies/vacancyIndex";
-import Form from "./pages/form/formIndex";
-import { createContext, useEffect, useState } from "react";
+import AddVacancy from "./pages/addVacancy/addVacancyIndex";
+import { createContext, useState } from "react";
 import { GoogleLogin } from "./pages/googleLogin";
 import Dashboard from "./pages/dashboard/index";
+import { Calendar } from "./pages/calender/indexCalender";
+import { FAQ } from "./pages/faq/faqIndex";
+import { Users } from "./pages/users/userIndex";
+import { UserObject } from "./models/UserObject";
+import { AddHiringSession } from "./pages/addHiringSession/hiringSessionIndex";
 //Theme provider provides ability to provide themes to our material UI
 
-export type UserObject = {
-  aud: string;
-  azp: string;
-  email: string;
-  email_verified: boolean;
-  exp: number;
-  family_name: string;
-  given_name: string;
-  hd: string;
-  iat: number;
-  iss: string;
-  jti: string;
-  name: string;
-  nbf: string;
-  picture: string;
-  sub: string;
-};
 export type UserType = {
   userObject: UserObject;
   updateUser?: () => void;
@@ -45,13 +30,19 @@ export type UserType = {
 export const AuthenticatedUserContext = createContext({} as UserType);
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({} as UserObject);
+  const [isLoggedIn, setLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true" ? true : false
+  );
+  const [user, setUser] = useState(
+    localStorage.getItem("userObject") === null
+      ? ({} as UserObject)
+      : (JSON.parse(localStorage.getItem("userObject") ?? "") as UserObject)
+  );
   const [theme, colorMode] = useMode();
   const logout = () => {
-    console.log("Logging out");
     setUser({} as UserObject);
     setLoggedIn(false);
+    localStorage.setItem("isLoggedIn", "false");
   };
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -79,13 +70,18 @@ function App() {
                   <Route path="/team" element={<Vacancies />}></Route>
                   {/* <Route path="/contacts" element={<Contacts />}></Route> */}
                   {/* <Route path="/invoices" element={<Invoices />}></Route> */}
-                  <Route path="/form" element={<Form />}></Route>
+                  <Route path="/form" element={<AddVacancy />}></Route>
+                  <Route path="/users" element={<Users />}></Route>
+                  <Route
+                    path="/addHiringSession"
+                    element={<AddHiringSession />}
+                  ></Route>
                   {/* <Route path="/bar" element={<Bar />}></Route> */}
                   {/* <Route path="/pie" element={<Pie />}></Route> */}
                   {/* <Route path="/line" element={<Line />}></Route> */}
-                  {/* <Route path="/faq" element={<FAQ />}></Route> */}
+                  <Route path="/faq" element={<FAQ />}></Route>
                   {/* <Route path="/geography" element={<Geography />}></Route> */}
-                  {/* <Route path="/calendar" element={<Calendar />}></Route> */}
+                  <Route path="/calendar" element={<Calendar />}></Route>
                 </Routes>
               </main>
             </div>
