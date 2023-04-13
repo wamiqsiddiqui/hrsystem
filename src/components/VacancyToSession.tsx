@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { tokens } from "../theme";
+import { ReactEventHandler, useState } from "react";
 
 type vacancyProps = {
   vacancyTitle: string;
@@ -40,8 +41,14 @@ const VacancyBox = ({ vacancyTitle }: vacancyProps) => {
   );
 };
 export const VacancyToSession = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  //   const vacanciesList: Array<string> = [];
+  const [vacanciesList, setVacanciesList] = useState([] as string[]);
+  const [selectedVacancy, setSelectedVacancy] = useState("vacancy 1");
+  const handleSelect = (event: any) => {
+    console.log(event);
+    setSelectedVacancy(event.target.value);
+    setVacanciesList((vacanciesList) => [...vacanciesList, event.target.value]);
+  };
   return (
     <Box
       display={"flex"}
@@ -55,12 +62,15 @@ export const VacancyToSession = () => {
         flexDirection={"row"}
         width={"100%"}
         justifyContent={"space-between"}
-        sx={{ gridColumn: "span 2", mt: "12px" }}
+        sx={{ gridColumn: "span 2", m: "12px 0 12px 0" }}
       >
         <Select
           variant="filled"
-          sx={{ gridColumn: "span 2", flex: 2 }}
-          value={"vacancy 1"}
+          sx={{ gridColumn: "span 2", flex: 2, mr: "12px" }}
+          defaultValue=""
+          value={selectedVacancy}
+          name="vacancy"
+          onChange={handleSelect}
         >
           <MenuItem value={"vacancy 1"}>Vacancy 1</MenuItem>
           <MenuItem value={"vacancy 2"}>Vacancy 2</MenuItem>
@@ -74,14 +84,14 @@ export const VacancyToSession = () => {
           variant="outlined"
           color="secondary"
           type="button"
-          sx={{ mt: "10px" }}
+          sx={{ mt: "0px" }}
         >
           Add New Vacancy
         </Button>
       </Box>
-      <VacancyBox vacancyTitle="Flutter Developer" />
-      <VacancyBox vacancyTitle="React Native Developer" />
-      <VacancyBox vacancyTitle="Graphic Designer" />
+      {vacanciesList.map((element) => (
+        <VacancyBox vacancyTitle={element} />
+      ))}
     </Box>
   );
 };
