@@ -1,15 +1,21 @@
 import {
   Box,
   Button,
+  IconButton,
   MenuItem,
   Select,
   TextField,
+  Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Header } from "../../components/Header";
 import { Formik, FormikValues } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
+import { tokens } from "../../theme";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { VacancyToSession } from "../../components/VacancyToSession";
 
 type sessionTypes = {
   sessionTitle: string;
@@ -77,7 +83,6 @@ export const AddHiringSession = () => {
                 helperText={touched.sessionTitle && errors.sessionTitle}
                 sx={{ gridColumn: "span 2" }}
               ></TextField>
-              <Box sx={{ gridColumn: "span 2" }}></Box>
               <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -102,7 +107,19 @@ export const AddHiringSession = () => {
                 // helperText={touched.endsOn && errors.endsOn}
                 sx={{ gridColumn: "span 1" }}
               ></TextField>
-              <Box sx={{ gridColumn: "span 2" }}></Box>
+              <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.sessionBudget}
+                variant="filled"
+                type="text"
+                name="sessionBudget"
+                label="Session Budget"
+                error={!!touched.sessionBudget && !!errors.sessionBudget}
+                helperText={touched.sessionBudget && errors.sessionBudget}
+                sx={{ gridColumn: "span 2" }}
+              ></TextField>
+
               <TextField
                 onChange={handleChange}
                 multiline
@@ -118,44 +135,7 @@ export const AddHiringSession = () => {
                 helperText={touched.objective && errors.objective}
                 sx={{ gridColumn: "span 2" }}
               ></TextField>
-              <Box sx={{ gridColumn: "span 2" }}></Box>
-              <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.sessionBudget}
-                variant="filled"
-                type="text"
-                name="sessionBudget"
-                label="Session Budget"
-                error={!!touched.sessionBudget && !!errors.sessionBudget}
-                helperText={touched.sessionBudget && errors.sessionBudget}
-                sx={{ gridColumn: "span 2" }}
-              ></TextField>
-              <Box sx={{ gridColumn: "span 2" }}></Box>
-              <Select
-                variant="filled"
-                sx={{ gridColumn: "span 1" }}
-                value={"vacancy 1"}
-              >
-                <MenuItem value={"vacancy 1"}>Vacancy 1</MenuItem>
-                <MenuItem value={"vacancy 2"}>Vacancy 2</MenuItem>
-                <MenuItem value={"vacancy 3"}>Vacancy 3</MenuItem>
-                <MenuItem value={"vacancy 4"}>Vacancy 4</MenuItem>
-                <MenuItem value={"vacancy 5"}>Vacancy 5</MenuItem>
-              </Select>
-
-              <Box display={"block"} sx={{ gridColumn: "span 2" }}>
-                <Button
-                  component={Link}
-                  to="/form"
-                  variant="outlined"
-                  color="secondary"
-                  type="button"
-                  sx={{ mt: "10px" }}
-                >
-                  Add New Vacancy
-                </Button>
-              </Box>
+              <VacancyToSession />
               <Box display={"block"} sx={{ gridColumn: "span 2" }} mt={"10px"}>
                 <Button
                   fullWidth

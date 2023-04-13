@@ -2,13 +2,18 @@ import {
   Box,
   Button,
   FormControlLabel,
+  MenuItem,
+  Select,
   Switch,
   TextField,
+  Typography,
+  useTheme,
 } from "@mui/material";
 import { Formik, FormikValues } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Header } from "../../components/Header";
+import { tokens } from "../../theme";
 type VacancyTypes = {
   title?: string;
   type?: string;
@@ -24,7 +29,7 @@ type VacancyTypes = {
 const initialValues: VacancyTypes = {
   title: "",
   phoneNumber: null,
-  type: "",
+  type: "Permanant",
   noOfOpenings: null,
   aboutTheJob: "",
   responsibilities: "",
@@ -43,34 +48,22 @@ const userSchema = yup.object().shape({
     .matches(phoneRegex, "Invalid Phone Number")
     .required("Phone Number is required"),
   type: yup.string().required("Type is Required"),
+  budgetPerOpening: yup.string().required("Budget is Required"),
   noOfOpenings: yup.string().required("Number of Openings is Required"),
   aboutTheJob: yup.string().required("Job Description is Required"),
   responsibilities: yup.string().required("Responsibilities is Required"),
   requirements: yup.string().required("Requirements is Required"),
 });
 const AddVacancy = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const handleFormSubmit = (values: FormikValues) => {
     console.log(values);
+    localStorage.setItem("vacancy", JSON.stringify(values));
   };
   return (
     <Box m={"20px"}>
-      <Box
-        display={"flex"}
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-      >
-        <Header
-          title={"Add Vacancy"}
-          subtitle={"New Vacancy for Mythod Pvt Ltd"}
-        ></Header>
-        <FormControlLabel
-          labelPlacement="start"
-          control={<Switch defaultChecked color="secondary" />}
-          label={"Vacancy Active Status"}
-          sx={{ justifyContent: "start", gridColumn: "span 2" }}
-        ></FormControlLabel>
-      </Box>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -85,6 +78,31 @@ const AddVacancy = () => {
           handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+            >
+              <Header
+                title={"Add Vacancy"}
+                subtitle={"New Vacancy for Mythod Pvt Ltd"}
+              ></Header>
+              <FormControlLabel
+                labelPlacement="start"
+                control={
+                  <Switch
+                    value={values.status}
+                    name="status"
+                    defaultChecked
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    color="secondary"
+                  />
+                }
+                label={"Vacancy Active Status"}
+                sx={{ justifyContent: "start", gridColumn: "span 2" }}
+              ></FormControlLabel>
+            </Box>
             <Box
               display={"grid"}
               gap={"30px"}
@@ -119,24 +137,42 @@ const AddVacancy = () => {
                 helperText={touched.phoneNumber && errors.phoneNumber}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Type"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.type}
-                name="type"
-                error={!!touched.type && !!errors.type}
-                helperText={touched.type && errors.type}
+              <Box
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"center"}
+                justifyContent={"start"}
                 sx={{ gridColumn: "span 2" }}
-              />
+              >
+                <Typography
+                  variant="h6"
+                  color={colors.greenAccent[400]}
+                  fontWeight={"bold"}
+                  sx={{ flex: 1, pr: "6px" }}
+                >
+                  Employment Type:
+                </Typography>
+                <Select
+                  variant="filled"
+                  name="type"
+                  label="Employment Type"
+                  error={!!touched.type && !!errors.type}
+                  sx={{ flex: 4 }}
+                  value={values.type}
+                  fullWidth
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"Permanant"}>Permanant</MenuItem>
+                  <MenuItem value={"Part Time"}>Part Time</MenuItem>
+                  <MenuItem value={"Contract"}>Contract</MenuItem>
+                </Select>
+              </Box>
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="No Of Openings"
+                label="Number Of Openings"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.noOfOpenings}
@@ -180,6 +216,8 @@ const AddVacancy = () => {
                 variant="filled"
                 type="text"
                 label="About the Job"
+                multiline
+                rows={5}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.aboutTheJob}
@@ -193,6 +231,8 @@ const AddVacancy = () => {
                 variant="filled"
                 type="text"
                 label="Responsibilities"
+                multiline
+                rows={5}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.responsibilities}
@@ -206,6 +246,8 @@ const AddVacancy = () => {
                 variant="filled"
                 type="text"
                 label="Requirements"
+                multiline
+                rows={5}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.requirements}
@@ -214,11 +256,17 @@ const AddVacancy = () => {
                 helperText={touched.requirements && errors.requirements}
                 sx={{ gridColumn: "span 2" }}
               />
-            </Box>
-            <Box display={"flex"} justifyContent={"end"} mt={"20px"}>
-              <Button color="secondary" type="submit" variant="contained">
-                Add New Vacancy
-              </Button>
+              <Box sx={{ gridColumn: "span 2" }}>
+                <Button
+                  color="secondary"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ p: "16px" }}
+                >
+                  Add New Vacancy
+                </Button>
+              </Box>
             </Box>
           </form>
         )}
