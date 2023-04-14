@@ -22,10 +22,11 @@ import {
   useRef,
   useState,
 } from "react";
+import { VacancyTypes } from "./AddVacancyTemp";
 
 type vacancyProps = {
-  vacancyTitle: string;
-  onRemoveVacancy: (title: string) => void;
+  vacancyTitle: VacancyTypes;
+  onRemoveVacancy: (title: VacancyTypes) => void;
 };
 const VacancyBox = ({ vacancyTitle, onRemoveVacancy }: vacancyProps) => {
   const theme = useTheme();
@@ -45,7 +46,7 @@ const VacancyBox = ({ vacancyTitle, onRemoveVacancy }: vacancyProps) => {
         gridColumn: "span 2",
       }}
     >
-      <Typography flex={2}>{vacancyTitle}</Typography>
+      <Typography flex={2}>{vacancyTitle.title}</Typography>
       <IconButton onClick={() => onRemoveVacancy(vacancyTitle)}>
         <CancelIcon />
       </IconButton>
@@ -54,31 +55,32 @@ const VacancyBox = ({ vacancyTitle, onRemoveVacancy }: vacancyProps) => {
 };
 export const VacancyToSession = () => {
   const [selectedVacanciesList, setSelectedVacanciesList] = useState(
-    [] as string[]
+    [] as VacancyTypes[]
+  );
+  const vacancies: VacancyTypes[] = JSON.parse(
+    localStorage.getItem("vacancies") ?? ""
   );
   const [vacanciesList, setVacanciesList] = useState([
-    "Attach Vacancy",
-    "Vacancy 1",
-    "Vacancy 2",
-    "Vacancy 3",
-    "Vacancy 4",
-    "Vacancy 5",
-    "Vacancy 6",
-  ]);
-  const onVacancyRemoveClick = (vacancyTitle: string) => {
-    setSelectedVacanciesList((vacanciesList) =>
-      vacanciesList.filter((element) => element != vacancyTitle)
+    ...vacancies,
+  ] as VacancyTypes[]);
+  const onVacancyRemoveClick = (vacancyTitle: VacancyTypes) => {
+    setSelectedVacanciesList((vacanciesList: VacancyTypes[]) =>
+      vacanciesList.filter((element) => element.title != vacancyTitle.title)
     );
     setVacanciesList((vacanciesList) => [...vacanciesList, vacancyTitle]);
   };
   const handleSelect = (event: SelectChangeEvent<string>) => {
     console.log(event);
-    setSelectedVacanciesList((vacanciesList) => [
+    setSelectedVacanciesList((vacanciesList: VacancyTypes[]) => [
       ...vacanciesList,
-      event.target.value,
+      JSON.parse(event.target.value),
     ]);
-    setVacanciesList((vacanciesList) =>
-      vacanciesList.filter((element) => element != event.target.value)
+    setVacanciesList((vacanciesList: VacancyTypes[]) =>
+      vacanciesList.filter((element: VacancyTypes) => {
+        console.log(`handleSelect = ${element}`);
+        console.log(`target = ${JSON.parse(event.target.value)}`);
+        return element.title != JSON.parse(event.target.value).title;
+      })
     );
   };
   return (
@@ -103,12 +105,15 @@ export const VacancyToSession = () => {
           value="Attach Vacancy"
           onChange={handleSelect}
         >
-          {vacanciesList.map((value) => (
+          <MenuItem value={"Attach Vacancy"} disabled>
+            {"Attach Vacancy"}
+          </MenuItem>
+          {vacanciesList.map((value: VacancyTypes) => (
             <MenuItem
-              value={value}
-              disabled={value == "Attach Vacancy" ? true : false}
+              value={JSON.stringify(value)}
+              disabled={value.title == "Attach Vacancy" ? true : false}
             >
-              {value}
+              {value.title}
             </MenuItem>
           ))}
         </Select>
@@ -123,7 +128,7 @@ export const VacancyToSession = () => {
           Add New Vacancy
         </Button>
       </Box>
-      {selectedVacanciesList.map((element) => (
+      {selectedVacanciesList.map((element: VacancyTypes) => (
         <VacancyBox
           vacancyTitle={element}
           onRemoveVacancy={onVacancyRemoveClick}
