@@ -60,7 +60,14 @@ const AddVacancy = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const handleFormSubmit = (values: FormikValues) => {
     console.log(values);
-    localStorage.setItem("vacancy", JSON.stringify(values));
+    const value = localStorage.getItem("vacancies");
+    console.log(value);
+    if (value) {
+      const vacancies = JSON.parse(localStorage.getItem("vacancies") ?? "");
+      localStorage.setItem("vacancies", JSON.stringify([...vacancies, values]));
+    } else {
+      localStorage.setItem("vacancies", JSON.stringify([values]));
+    }
   };
   return (
     <Box m={"20px"}>

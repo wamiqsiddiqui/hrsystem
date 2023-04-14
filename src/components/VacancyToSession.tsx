@@ -1,21 +1,33 @@
 import {
   Box,
   Button,
+  FormControl,
   IconButton,
+  InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography,
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { tokens } from "../theme";
-import { ReactEventHandler, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  ReactEventHandler,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 type vacancyProps = {
   vacancyTitle: string;
+  onRemoveVacancy: (title: string) => void;
 };
-const VacancyBox = ({ vacancyTitle }: vacancyProps) => {
+const VacancyBox = ({ vacancyTitle, onRemoveVacancy }: vacancyProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -34,20 +46,40 @@ const VacancyBox = ({ vacancyTitle }: vacancyProps) => {
       }}
     >
       <Typography flex={2}>{vacancyTitle}</Typography>
-      <IconButton>
+      <IconButton onClick={() => onRemoveVacancy(vacancyTitle)}>
         <CancelIcon />
       </IconButton>
     </Box>
   );
 };
 export const VacancyToSession = () => {
-  //   const vacanciesList: Array<string> = [];
-  const [vacanciesList, setVacanciesList] = useState([] as string[]);
-  const [selectedVacancy, setSelectedVacancy] = useState("vacancy 1");
-  const handleSelect = (event: any) => {
+  const [selectedVacanciesList, setSelectedVacanciesList] = useState(
+    [] as string[]
+  );
+  const [vacanciesList, setVacanciesList] = useState([
+    "Attach Vacancy",
+    "Vacancy 1",
+    "Vacancy 2",
+    "Vacancy 3",
+    "Vacancy 4",
+    "Vacancy 5",
+    "Vacancy 6",
+  ]);
+  const onVacancyRemoveClick = (vacancyTitle: string) => {
+    setSelectedVacanciesList((vacanciesList) =>
+      vacanciesList.filter((element) => element != vacancyTitle)
+    );
+    setVacanciesList((vacanciesList) => [...vacanciesList, vacancyTitle]);
+  };
+  const handleSelect = (event: SelectChangeEvent<string>) => {
     console.log(event);
-    setSelectedVacancy(event.target.value);
-    setVacanciesList((vacanciesList) => [...vacanciesList, event.target.value]);
+    setSelectedVacanciesList((vacanciesList) => [
+      ...vacanciesList,
+      event.target.value,
+    ]);
+    setVacanciesList((vacanciesList) =>
+      vacanciesList.filter((element) => element != event.target.value)
+    );
   };
   return (
     <Box
@@ -65,18 +97,20 @@ export const VacancyToSession = () => {
         sx={{ gridColumn: "span 2", m: "12px 0 12px 0" }}
       >
         <Select
-          variant="filled"
+          fullWidth
           sx={{ gridColumn: "span 2", flex: 2, mr: "12px" }}
-          defaultValue=""
-          value={selectedVacancy}
-          name="vacancy"
+          defaultValue="Attach Vacancy"
+          value="Attach Vacancy"
           onChange={handleSelect}
         >
-          <MenuItem value={"vacancy 1"}>Vacancy 1</MenuItem>
-          <MenuItem value={"vacancy 2"}>Vacancy 2</MenuItem>
-          <MenuItem value={"vacancy 3"}>Vacancy 3</MenuItem>
-          <MenuItem value={"vacancy 4"}>Vacancy 4</MenuItem>
-          <MenuItem value={"vacancy 5"}>Vacancy 5</MenuItem>
+          {vacanciesList.map((value) => (
+            <MenuItem
+              value={value}
+              disabled={value == "Attach Vacancy" ? true : false}
+            >
+              {value}
+            </MenuItem>
+          ))}
         </Select>
         <Button
           component={Link}
@@ -89,8 +123,11 @@ export const VacancyToSession = () => {
           Add New Vacancy
         </Button>
       </Box>
-      {vacanciesList.map((element) => (
-        <VacancyBox vacancyTitle={element} />
+      {selectedVacanciesList.map((element) => (
+        <VacancyBox
+          vacancyTitle={element}
+          onRemoveVacancy={onVacancyRemoveClick}
+        />
       ))}
     </Box>
   );
