@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { VacancyTypes } from "./AddVacancyTemp";
+import { VacancyTypes } from "../models/Vacancy";
 
 type vacancyProps = {
   vacancyTitle: VacancyTypes;
@@ -119,7 +119,7 @@ export const VacancyToSession = () => {
         </Select>
         <Button
           component={Link}
-          to="/form"
+          to="/form/?isFromSessionn=true"
           variant="outlined"
           color="secondary"
           type="button"

@@ -6,7 +6,7 @@ import {
   withFormik,
 } from "formik";
 import React from "react";
-export type VacancyTypes = {
+export type VacancyTypesTemp = {
   title?: string;
   type?: string;
   noOfOpenings?: number;
@@ -28,7 +28,7 @@ type VacancyProps = {
   login?: any;
 };
 
-const InnerForm = (props: OtherProps & FormikProps<VacancyTypes>) => {
+const InnerForm = (props: OtherProps & FormikProps<VacancyTypesTemp>) => {
   const {
     values,
     errors,
@@ -196,7 +196,7 @@ const InnerForm = (props: OtherProps & FormikProps<VacancyTypes>) => {
   );
 };
 
-const VacancyForm = withFormik<VacancyProps, VacancyTypes>({
+const VacancyForm = withFormik<VacancyProps, VacancyTypesTemp>({
   mapPropsToValues: (props: VacancyProps) => ({
     title: props.initialTitle,
     type: props.initialType,
@@ -212,7 +212,7 @@ const VacancyForm = withFormik<VacancyProps, VacancyTypes>({
     aboutTheJob,
     responsibilities,
     requirements,
-  }: VacancyTypes) => {
+  }: VacancyTypesTemp) => {
     console.log(`title = ${title}`);
     console.log(`type = ${type}`);
     console.log(`noOfOpeneings = ${noOfOpenings}`);
@@ -222,7 +222,7 @@ const VacancyForm = withFormik<VacancyProps, VacancyTypes>({
   },
 })(InnerForm);
 
-const AddVacancy: React.FC<{}> = (props: any) => {
+const AddVacancyTemp: React.FC<{}> = (props: any) => {
   return (
     <div>
       Add Vacancy Form
@@ -232,4 +232,4 @@ const AddVacancy: React.FC<{}> = (props: any) => {
     </div>
   );
 };
-export default AddVacancy;
+export default AddVacancyTemp;

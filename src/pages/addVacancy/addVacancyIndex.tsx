@@ -9,23 +9,14 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik, FormikValues } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Header } from "../../components/Header";
 import { tokens } from "../../theme";
-type VacancyTypes = {
-  title?: string;
-  type?: string;
-  experienceRequired: string;
-  status: boolean;
-  budgetPerOpening: string;
-  phoneNumber: number | null;
-  noOfOpenings?: number | null;
-  aboutTheJob?: string;
-  responsibilities?: string;
-  requirements?: string;
-};
+import { VacancyTypes } from "../../models/Vacancy";
+
 const initialValues: VacancyTypes = {
   title: "",
   phoneNumber: null,
@@ -54,8 +45,14 @@ const userSchema = yup.object().shape({
   responsibilities: yup.string().required("Responsibilities is Required"),
   requirements: yup.string().required("Requirements is Required"),
 });
-const AddVacancy = () => {
+
+type AddVacancyProp = {
+  isFromSession?: boolean;
+};
+export const AddVacancy = ({ isFromSession = false }: AddVacancyProp) => {
+  const { isFromSessionn } = useParams();
   const theme = useTheme();
+  const navigate = useNavigate();
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const handleFormSubmit = (values: FormikValues) => {
@@ -67,6 +64,10 @@ const AddVacancy = () => {
       localStorage.setItem("vacancies", JSON.stringify([...vacancies, values]));
     } else {
       localStorage.setItem("vacancies", JSON.stringify([values]));
+    }
+    console.log("isFromSession = ", isFromSessionn);
+    if (isFromSessionn) {
+      navigate(-1);
     }
   };
   return (
@@ -281,4 +282,3 @@ const AddVacancy = () => {
     </Box>
   );
 };
-export default AddVacancy;

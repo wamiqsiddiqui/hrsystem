@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import "../App.css";
 import { Typography, useTheme } from "@mui/material";
-import { tokens } from "../theme";
-import { CLIENT_ID } from "../tokens";
+import { tokens } from "../../theme";
+import { CLIENT_ID } from "../../tokens";
 
 type GoogleLoginProps = {
   setLogin: (isLoggedIn: boolean, user: any) => void;
