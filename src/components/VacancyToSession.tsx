@@ -1,21 +1,34 @@
 import {
   Box,
   Button,
+  FormControl,
   IconButton,
+  InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography,
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { tokens } from "../theme";
-import { ReactEventHandler, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  ReactEventHandler,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import { VacancyTypes } from "../models/Vacancy";
 
 type vacancyProps = {
-  vacancyTitle: string;
+  vacancyTitle: VacancyTypes;
+  onRemoveVacancy: (title: VacancyTypes) => void;
 };
-const VacancyBox = ({ vacancyTitle }: vacancyProps) => {
+const VacancyBox = ({ vacancyTitle, onRemoveVacancy }: vacancyProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -33,21 +46,42 @@ const VacancyBox = ({ vacancyTitle }: vacancyProps) => {
         gridColumn: "span 2",
       }}
     >
-      <Typography flex={2}>{vacancyTitle}</Typography>
-      <IconButton>
+      <Typography flex={2}>{vacancyTitle.title}</Typography>
+      <IconButton onClick={() => onRemoveVacancy(vacancyTitle)}>
         <CancelIcon />
       </IconButton>
     </Box>
   );
 };
 export const VacancyToSession = () => {
-  //   const vacanciesList: Array<string> = [];
-  const [vacanciesList, setVacanciesList] = useState([] as string[]);
-  const [selectedVacancy, setSelectedVacancy] = useState("vacancy 1");
-  const handleSelect = (event: any) => {
+  const [selectedVacanciesList, setSelectedVacanciesList] = useState(
+    [] as VacancyTypes[]
+  );
+  const vacancies: VacancyTypes[] = JSON.parse(
+    localStorage.getItem("vacancies") ?? ""
+  );
+  const [vacanciesList, setVacanciesList] = useState([
+    ...vacancies,
+  ] as VacancyTypes[]);
+  const onVacancyRemoveClick = (vacancyTitle: VacancyTypes) => {
+    setSelectedVacanciesList((vacanciesList: VacancyTypes[]) =>
+      vacanciesList.filter((element) => element.title != vacancyTitle.title)
+    );
+    setVacanciesList((vacanciesList) => [...vacanciesList, vacancyTitle]);
+  };
+  const handleSelect = (event: SelectChangeEvent<string>) => {
     console.log(event);
-    setSelectedVacancy(event.target.value);
-    setVacanciesList((vacanciesList) => [...vacanciesList, event.target.value]);
+    setSelectedVacanciesList((vacanciesList: VacancyTypes[]) => [
+      ...vacanciesList,
+      JSON.parse(event.target.value),
+    ]);
+    setVacanciesList((vacanciesList: VacancyTypes[]) =>
+      vacanciesList.filter((element: VacancyTypes) => {
+        console.log(`handleSelect = ${element}`);
+        console.log(`target = ${JSON.parse(event.target.value)}`);
+        return element.title != JSON.parse(event.target.value).title;
+      })
+    );
   };
   return (
     <Box
@@ -65,22 +99,27 @@ export const VacancyToSession = () => {
         sx={{ gridColumn: "span 2", m: "12px 0 12px 0" }}
       >
         <Select
-          variant="filled"
+          fullWidth
           sx={{ gridColumn: "span 2", flex: 2, mr: "12px" }}
-          defaultValue=""
-          value={selectedVacancy}
-          name="vacancy"
+          defaultValue="Attach Vacancy"
+          value="Attach Vacancy"
           onChange={handleSelect}
         >
-          <MenuItem value={"vacancy 1"}>Vacancy 1</MenuItem>
-          <MenuItem value={"vacancy 2"}>Vacancy 2</MenuItem>
-          <MenuItem value={"vacancy 3"}>Vacancy 3</MenuItem>
-          <MenuItem value={"vacancy 4"}>Vacancy 4</MenuItem>
-          <MenuItem value={"vacancy 5"}>Vacancy 5</MenuItem>
+          <MenuItem value={"Attach Vacancy"} disabled>
+            {"Attach Vacancy"}
+          </MenuItem>
+          {vacanciesList.map((value: VacancyTypes) => (
+            <MenuItem
+              value={JSON.stringify(value)}
+              disabled={value.title == "Attach Vacancy" ? true : false}
+            >
+              {value.title}
+            </MenuItem>
+          ))}
         </Select>
         <Button
           component={Link}
-          to="/form"
+          to="/form/?isFromSessionn=true"
           variant="outlined"
           color="secondary"
           type="button"
@@ -89,8 +128,11 @@ export const VacancyToSession = () => {
           Add New Vacancy
         </Button>
       </Box>
-      {vacanciesList.map((element) => (
-        <VacancyBox vacancyTitle={element} />
+      {selectedVacanciesList.map((element: VacancyTypes) => (
+        <VacancyBox
+          vacancyTitle={element}
+          onRemoveVacancy={onVacancyRemoveClick}
+        />
       ))}
     </Box>
   );
